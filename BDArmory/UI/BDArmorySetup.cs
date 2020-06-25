@@ -1413,6 +1413,20 @@ namespace BDArmory.UI
             BDArmorySettings.MAX_NUM_BULLET_DECALS = (int)GUI.HorizontalSlider(SRightRect(line), BDArmorySettings.MAX_NUM_BULLET_DECALS, 1f, 999);
             line++;
             line++;
+
+            BDArmorySettings.HEART_BLEED_ENABLED = GUI.Toggle(SLeftRect(line), BDArmorySettings.HEART_BLEED_ENABLED, Localizer.Format("#LOC_BDArmory_Settings_HeartBleedEnabled"));//"Heart Bleed Enabled"
+            line++;
+            GUI.Label(SLeftRect(line), $"{Localizer.Format("#LOC_BDArmory_Settings_HeartBleedRate")}:  ({BDArmorySettings.HEART_BLEED_RATE})", leftLabel);//Heart Bleed Rate
+            BDArmorySettings.HEART_BLEED_RATE = GUI.HorizontalSlider(SRightRect(line), BDArmorySettings.HEART_BLEED_RATE, 0.01f, 0.1f);
+            line++;
+            GUI.Label(SLeftRect(line), $"{Localizer.Format("#LOC_BDArmory_Settings_HeartBleedInterval")}:  ({BDArmorySettings.HEART_BLEED_INTERVAL})", leftLabel);//Heart Bleed Interval
+            BDArmorySettings.HEART_BLEED_INTERVAL = GUI.HorizontalSlider(SRightRect(line), BDArmorySettings.HEART_BLEED_INTERVAL, 1f, 60f);
+            line++;
+            GUI.Label(SLeftRect(line), $"{Localizer.Format("#LOC_BDArmory_Settings_HeartBleedThreshold")}:  ({BDArmorySettings.HEART_BLEED_THRESHOLD})", leftLabel);//Heart Bleed Threshold
+            BDArmorySettings.HEART_BLEED_THRESHOLD = GUI.HorizontalSlider(SRightRect(line), BDArmorySettings.HEART_BLEED_THRESHOLD, 1f, 100f);
+            line++;
+
+
             BDArmorySettings.RESOURCE_STEAL_ENABLED = GUI.Toggle(SLeftRect(line), BDArmorySettings.RESOURCE_STEAL_ENABLED, Localizer.Format("#LOC_BDArmory_Settings_ResourceStealEnabled"));//"Resource Steal Enabled"
             line++;
             GUI.Label(SLeftRect(line), $"{Localizer.Format("#LOC_BDArmory_Settings_FuelStealRation")}:  ({BDArmorySettings.RESOURCE_STEAL_FUEL_RATION})", leftLabel);//Fuel Steal Ration

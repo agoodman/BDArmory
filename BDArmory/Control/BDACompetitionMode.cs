@@ -1386,5 +1386,8 @@ namespace BDArmory.Control
                 Debug.Log("[BDArmoryCompetition:" + CompetitionID.ToString() + "]: WHOSHOTWHO:" + whoShotWho[key] + ":" + key);
             }
         }
+
+
     }
+
 }

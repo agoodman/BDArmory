@@ -61,5 +61,9 @@
         [BDAPersistantSettingsField] public static bool RESOURCE_STEAL_ENABLED = false;
         [BDAPersistantSettingsField] public static float RESOURCE_STEAL_FUEL_RATION = 0.2f;
         [BDAPersistantSettingsField] public static float RESOURCE_STEAL_AMMO_RATION = 0.2f;
+        [BDAPersistantSettingsField] public static bool HEART_BLEED_ENABLED = false;
+        [BDAPersistantSettingsField] public static float HEART_BLEED_RATE = 0.01f;
+        [BDAPersistantSettingsField] public static float HEART_BLEED_INTERVAL = 10f;
+        [BDAPersistantSettingsField] public static float HEART_BLEED_THRESHOLD = 10f;
     }
 }
