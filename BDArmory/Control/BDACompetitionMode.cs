@@ -61,6 +61,9 @@ namespace BDArmory.Control
         public Dictionary<string, string> craftUrls = new Dictionary<string, string>();
         public Dictionary<string, string> teams = new Dictionary<string, string>();
 
+        public Dictionary<string, string> longestHitWeapon = new Dictionary<string, string>();
+        public Dictionary<string, double> longestHitDistance = new Dictionary<string, double>();
+
         public bool killerGMenabled = false;
         public bool pinataAlive = false;
 
@@ -78,7 +81,7 @@ namespace BDArmory.Control
         private HashSet<int> ammoIds = new HashSet<int>();
 
         // time competition was started
-        int CompetitionID;
+        public int CompetitionID;
 
         // pilot actions
         private Dictionary<string, string> pilotActions = new Dictionary<string, string>();
@@ -238,6 +241,7 @@ namespace BDArmory.Control
 
         IEnumerator DogfightCompetitionModeRoutine(float distance, bool spawn = false)
         {
+            BDAScoreService.Instance.ResetScores();
             competitionStarting = true;
             if (spawn)
             {
@@ -1538,6 +1542,16 @@ namespace BDArmory.Control
             KillTimer.Remove(vesselName);
         }
 
+        public void TrackHit(string attacker, string weaponName, double hitDistance)
+        {
+            if( !longestHitDistance.ContainsKey(attacker) || hitDistance > longestHitDistance[attacker] )
+            {
+                Debug.Log(string.Format("[BDACompetitionMode] Tracked hit for {0} with {1} at {2}", attacker, weaponName, hitDistance));
+                longestHitWeapon[attacker] = weaponName;
+                longestHitDistance[attacker] = hitDistance;
+            }
+        }
+
         public void LogResults()
         {
             // get everyone who's still alive
@@ -1574,16 +1588,21 @@ namespace BDArmory.Control
             using (var stream = File.OpenWrite(Environment.CurrentDirectory + $"/BDArmoryCompetition/{CompetitionID}_results.csv"))
             using (var writer = new StreamWriter(stream))
             {
-                writer.WriteLine("User,Survival,Deaths,Kills,CleanKills");
+                writer.WriteLine("User,Survival,Deaths,Kills,CleanKills,LongestHitDistance,LongestHitWeapon");
                 foreach (var pair in Scores)
                 {
                     var survival = BDArmorySettings.SPAWN_VESSELS ? 0 : DeathOrder.TryGetValue(pair.Key, out var v) ? v + 1 : totalDeaths + 1;
-                    writer.WriteLine($"{pair.Key.Replace(',','_')},{survival},{pair.Value.deaths},{pair.Value.kills},{pair.Value.cleanKills}");
+                    var playerName = pair.Key.Replace(',', '_');
+                    var lhd = longestHitDistance.ContainsKey(playerName) ? longestHitDistance[playerName] : -1;
+                    var lhw = longestHitWeapon.ContainsKey(playerName) ? longestHitWeapon[playerName] : "";
+                    writer.WriteLine($"{playerName},{survival},{pair.Value.deaths},{pair.Value.kills},{pair.Value.cleanKills},{lhd},{lhw}");
                 }
                 
                 writer.Flush();
                 stream.Flush();
             }
+
+            BDAScoreService.Instance.SubmitResults();
         }
 
         public class FinalScore
