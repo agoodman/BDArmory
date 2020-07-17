@@ -241,7 +241,6 @@ namespace BDArmory.Control
 
         IEnumerator DogfightCompetitionModeRoutine(float distance, bool spawn = false)
         {
-            BDAScoreService.Instance.ResetScores();
             competitionStarting = true;
             if (spawn)
             {
@@ -1601,8 +1600,6 @@ namespace BDArmory.Control
                 writer.Flush();
                 stream.Flush();
             }
-
-            BDAScoreService.Instance.SubmitResults();
         }
 
         public class FinalScore
