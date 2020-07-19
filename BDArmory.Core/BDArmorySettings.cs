@@ -60,6 +60,7 @@
         [BDAPersistantSettingsField] public static bool AUTOCATEGORIZE_PARTS = true;
         [BDAPersistantSettingsField] public static bool SHOW_CATEGORIES = false;
         [BDAPersistantSettingsField] public static int TERRAIN_ALERT_FREQUENCY = 1;               // Controls how often terrain avoidance checks are made (gets scaled by 1+(radarAltitude/500)^2)
-        [BDAPersistantSettingsField] public static bool REMOTE_LOGGING_ENABLED = false;               // Controls how often terrain avoidance checks are made (gets scaled by 1+(radarAltitude/500)^2)
+        [BDAPersistantSettingsField] public static bool REMOTE_LOGGING_ENABLED = false;           // Enable/disable remote orchestration
+        [BDAPersistantSettingsField] public static string COMPETITION_HASH = "";                  // Competition hash used for orchestration
     }
 }
